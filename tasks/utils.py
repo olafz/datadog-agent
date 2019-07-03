@@ -30,14 +30,8 @@ def bin_name(name, android=False):
 
 
 def get_multi_python_location(embedded_path=None, rtloader_root=None):
-    if rtloader_root is None:
-        rtloader_lib = "{}/lib".format(rtloader_root or embedded_path)
-        rtloader_headers = "{}/include".format(rtloader_root or embedded_path)
-    # if rtloader_root is specified we're working in dev mode from the rtloader folder
-    else:
-        rtloader_lib = "{}/rtloader".format(rtloader_root)
-        rtloader_headers = "{}/include".format(rtloader_root)
-
+    rtloader_lib = "{}/lib".format(rtloader_root or embedded_path)
+    rtloader_headers = "{}/include".format(rtloader_root or embedded_path)
     return rtloader_lib, rtloader_headers
 
 def get_build_flags(ctx, static=False, prefix=None, embedded_path=None,
