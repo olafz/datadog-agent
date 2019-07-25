@@ -262,16 +262,16 @@ func setupMetadataCollection(s *serializer.Serializer, hostname string) error {
 		log.Errorf("Unable to parse metadata_providers config: %v", err)
 	}
 	// Should be always true, except in some edge cases (multiple agents per host)
-	err = common.MetadataScheduler.AddCollector("host", hostMetadataCollectorInterval*time.Second)
+	err = common.MetadataScheduler.AddCollector("host", config.Datadog.GetDuration("host_metadata_interval")*time.Second)
 	if err != nil {
 		return log.Error("Host metadata is supposed to be always available in the catalog!")
 	}
-	err = common.MetadataScheduler.AddCollector("agent_checks", agentChecksMetadataCollectorInterval*time.Second)
+	err = common.MetadataScheduler.AddCollector("agent_checks", config.Datadog.GetDuration("agent_check_metadata_interval")*time.Second)
 	if err != nil {
 		return log.Error("Agent Checks metadata is supposed to be always available in the catalog!")
 	}
 	if addDefaultResourcesCollector && runtime.GOOS == "linux" {
-		err = common.MetadataScheduler.AddCollector("resources", defaultResourcesMetadataCollectorInterval*time.Second)
+		err = common.MetadataScheduler.AddCollector("resources", config.Datadog.GetDuration("default_resources_metadata_interval")*time.Second)
 		if err != nil {
 			log.Warn("Could not add resources metadata provider: ", err)
 		}

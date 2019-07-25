@@ -68,8 +68,6 @@ extensions for special Datadog features.`,
 )
 
 const (
-	// run the host metadata collector every 14400 seconds (4 hours)
-	hostMetadataCollectorInterval = 14400
 	// loggerName is the name of the dogstatsd logger
 	loggerName config.LoggerName = "DSD"
 )
@@ -174,7 +172,7 @@ func start(cmd *cobra.Command, args []string) error {
 		metaScheduler = metadata.NewScheduler(s, hname)
 
 		// add the host metadata collector
-		err = metaScheduler.AddCollector("host", hostMetadataCollectorInterval*time.Second)
+		err = metaScheduler.AddCollector("host", config.Datadog.GetDuration("host_metadata_interval")*time.Second)
 		if err != nil {
 			metaScheduler.Stop()
 			return log.Error("Host metadata is supposed to be always available in the catalog!")
