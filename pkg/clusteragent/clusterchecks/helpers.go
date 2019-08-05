@@ -8,6 +8,7 @@
 package clusterchecks
 
 import (
+	"sort"
 	"strings"
 	"time"
 
@@ -85,7 +86,21 @@ func getNameAndNamespaceFromEntity(s string) (string, string) {
 func calculateBusyness(checkStats types.CLCRunnersStats) int {
 	busyness := 0.0
 	for _, stats := range checkStats {
-		busyness += 0.8*float64(stats.AverageExecutionTime) + 0.2*float64(stats.MetricSamples)
+		busyness += busynessFunc(stats.AverageExecutionTime, stats.MetricSamples)
 	}
 	return int(busyness)
+}
+
+func busynessFunc(avgExecTime, mSamples int) float64 {
+	return 0.8*float64(avgExecTime) + 0.2*float64(mSamples)
+}
+
+// orderedKeys sorts the keys of a map and return them in a slice
+func orderedKeys(m map[string]int) []string {
+	keys := []string{}
+	for key := range m {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	return keys
 }
