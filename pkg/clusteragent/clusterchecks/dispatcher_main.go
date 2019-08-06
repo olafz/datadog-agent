@@ -20,7 +20,7 @@ import (
 	"github.com/DataDog/datadog-agent/pkg/util/log"
 )
 
-const runnerStatsSeconds = 300 // 5 minutes
+const runnerStatsSeconds = 60 // 5 minutes
 
 // dispatcher holds the management logic for cluster-checks
 type dispatcher struct {
@@ -186,6 +186,8 @@ func (d *dispatcher) run(ctx context.Context) {
 				// collect CLC runners stats and update cache
 				// needed for the advanced dispatching logic
 				d.updateRunnersStats()
+				// rebalance checks distribution if needed
+				d.rebalance()
 			}
 		}
 	}

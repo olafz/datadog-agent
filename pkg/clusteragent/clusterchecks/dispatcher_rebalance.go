@@ -10,6 +10,9 @@ package clusterchecks
 import (
 	"fmt"
 	"sort"
+
+	"github.com/DataDog/datadog-agent/pkg/collector/check"
+	"github.com/DataDog/datadog-agent/pkg/util/log"
 )
 
 type Weight struct {
@@ -134,14 +137,25 @@ func pickNode(checkWeight int, diffMap map[string]int, srcNode string) string {
 }
 
 func (d *dispatcher) moveCheck(src, dest, checkID string) {
+	log.Debugf("Moving %s from %s to %s", checkID, src, dest)
+
 	(*d.store.nodes[src]).Lock()
-	defer (*d.store.nodes[src]).Unlock()
-
 	(*d.store.nodes[dest]).Lock()
-	defer (*d.store.nodes[dest]).Unlock()
-
 	(*d.store.nodes[dest]).clcRunnerStats[checkID] = (*d.store.nodes[src]).clcRunnerStats[checkID]
 	delete((*d.store.nodes[src]).clcRunnerStats, checkID)
+	(*d.store.nodes[dest]).Unlock()
+	(*d.store.nodes[src]).Unlock()
+
+	d.store.RLock()
+	digest := d.store.idToDigest[check.ID(checkID)]
+	config := d.store.digestToConfig[digest]
+	d.store.RUnlock()
+
+	log.Debugf("Digest of %s is %s", checkID, digest)
+	log.Debugf("Config is %s", config.String())
+
+	d.removeConfig(digest)
+	d.addConfig(config, dest)
 }
 
 func (d *dispatcher) rebalance() {

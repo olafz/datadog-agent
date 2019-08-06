@@ -101,6 +101,868 @@ func TestRebalance(t *testing.T) {
 				},
 			},
 		},
+		{
+			in: map[string]*nodeStore{
+				"A": {
+					name: "A",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+						"checkA1": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkA2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkA3": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					name: "B",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkB1": types.CLCRunnerStats{
+							AverageExecutionTime: 10,
+							MetricSamples:        10,
+						},
+						"checkB2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+			out: map[string]*nodeStore{
+				"A": {
+					name: "A",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+						"checkA1": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkA2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					name: "B",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA3": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkB1": types.CLCRunnerStats{
+							AverageExecutionTime: 10,
+							MetricSamples:        10,
+						},
+						"checkB2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+		},
+		{
+			in: map[string]*nodeStore{
+				"A": {
+					name: "A",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+						"checkA1": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkA2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkA3": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					name: "B",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkB1": types.CLCRunnerStats{
+							AverageExecutionTime: 10,
+							MetricSamples:        10,
+						},
+						"checkB2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"C": {
+					name: "C",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 5,
+							MetricSamples:        10,
+						},
+						"checkC1": types.CLCRunnerStats{
+							AverageExecutionTime: 90,
+							MetricSamples:        10,
+						},
+						"checkC2": types.CLCRunnerStats{
+							AverageExecutionTime: 110,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"D": {
+					name: "D",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkD0": types.CLCRunnerStats{
+							AverageExecutionTime: 10,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+			out: map[string]*nodeStore{
+				"A": {
+					name: "A",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+						"checkA1": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkA2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					name: "B",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkB1": types.CLCRunnerStats{
+							AverageExecutionTime: 10,
+							MetricSamples:        10,
+						},
+						"checkB2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"C": {
+					name: "C",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 5,
+							MetricSamples:        10,
+						},
+						"checkC1": types.CLCRunnerStats{
+							AverageExecutionTime: 90,
+							MetricSamples:        10,
+						},
+						"checkC2": types.CLCRunnerStats{
+							AverageExecutionTime: 110,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"D": {
+					name: "D",
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkD0": types.CLCRunnerStats{
+							AverageExecutionTime: 10,
+							MetricSamples:        10,
+						},
+						"checkA3": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+		}, {
+			in: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+						"checkA1": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkA2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkA3": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+						"checkB1": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkB2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkB3": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+						"checkB4": types.CLCRunnerStats{
+							AverageExecutionTime: 500,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"C": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkC1": types.CLCRunnerStats{
+							AverageExecutionTime: 10,
+							MetricSamples:        10,
+						},
+						"checkC2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"D": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkD0": types.CLCRunnerStats{
+							AverageExecutionTime: 5,
+							MetricSamples:        10,
+						},
+						"checkD1": types.CLCRunnerStats{
+							AverageExecutionTime: 90,
+							MetricSamples:        10,
+						},
+						"checkD2": types.CLCRunnerStats{
+							AverageExecutionTime: 110,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"E": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkE0": types.CLCRunnerStats{
+							AverageExecutionTime: 10,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+			out: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+						"checkA1": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkA2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkA3": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+						"checkB1": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkB2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"C": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkC1": types.CLCRunnerStats{
+							AverageExecutionTime: 10,
+							MetricSamples:        10,
+						},
+						"checkC2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkB3": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"D": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkD0": types.CLCRunnerStats{
+							AverageExecutionTime: 5,
+							MetricSamples:        10,
+						},
+						"checkD1": types.CLCRunnerStats{
+							AverageExecutionTime: 90,
+							MetricSamples:        10,
+						},
+						"checkD2": types.CLCRunnerStats{
+							AverageExecutionTime: 110,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"E": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkE0": types.CLCRunnerStats{
+							AverageExecutionTime: 10,
+							MetricSamples:        10,
+						},
+						"checkB4": types.CLCRunnerStats{
+							AverageExecutionTime: 500,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+		},
+		{
+			in: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+						"checkA1": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkA2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkA3": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkB1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkB2": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+						"checkB3": types.CLCRunnerStats{
+							AverageExecutionTime: 500,
+							MetricSamples:        10,
+						},
+						"checkB4": types.CLCRunnerStats{
+							AverageExecutionTime: 40,
+							MetricSamples:        10,
+						},
+						"checkB5": types.CLCRunnerStats{
+							AverageExecutionTime: 60,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"C": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+			out: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+						"checkA1": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkA2": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkA3": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkB1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkB2": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+
+						"checkB4": types.CLCRunnerStats{
+							AverageExecutionTime: 40,
+							MetricSamples:        10,
+						},
+						"checkB5": types.CLCRunnerStats{
+							AverageExecutionTime: 60,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"C": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkB3": types.CLCRunnerStats{
+							AverageExecutionTime: 500,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+		}, {
+			in: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{},
+				},
+			},
+			out: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{},
+				},
+			},
+		}, {
+			in: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+			out: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkA0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 50,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+		}, {
+			in: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{},
+				},
+				"C": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkC1": types.CLCRunnerStats{
+							AverageExecutionTime: 500,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+			out: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC1": types.CLCRunnerStats{
+							AverageExecutionTime: 500,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{},
+				},
+				"C": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+		}, {
+			in: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"C": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkC1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"D": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkD0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkD1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkD2": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"E": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkE0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkE1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkE2": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+						"checkE3": types.CLCRunnerStats{
+							AverageExecutionTime: 500,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+			out: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkE3": types.CLCRunnerStats{
+							AverageExecutionTime: 500,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkE2": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"C": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkC1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"D": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkD0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkD1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+						"checkD2": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"E": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkE0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkE1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        10,
+						},
+					},
+				},
+			},
+		}, {
+			in: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"C": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        5,
+						},
+						"checkC1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        20,
+						},
+					},
+				},
+				"D": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkD0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        5,
+						},
+						"checkD1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        50,
+						},
+						"checkD2": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        600,
+						},
+					},
+				},
+				"E": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkE0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkE1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        300,
+						},
+						"checkE2": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+						"checkE3": types.CLCRunnerStats{
+							AverageExecutionTime: 500,
+							MetricSamples:        1000,
+						},
+					},
+				},
+			},
+			out: map[string]*nodeStore{
+				"A": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkE3": types.CLCRunnerStats{
+							AverageExecutionTime: 500,
+							MetricSamples:        1000,
+						},
+					},
+				},
+				"B": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkB0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkE2": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        10,
+						},
+					},
+				},
+				"C": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkC0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        5,
+						},
+						"checkC1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        20,
+						},
+						"checkD2": types.CLCRunnerStats{
+							AverageExecutionTime: 300,
+							MetricSamples:        600,
+						},
+					},
+				},
+				"D": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkD0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        5,
+						},
+						"checkD1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        50,
+						},
+					},
+				},
+				"E": {
+					clcRunnerStats: types.CLCRunnersStats{
+						"checkE0": types.CLCRunnerStats{
+							AverageExecutionTime: 20,
+							MetricSamples:        10,
+						},
+						"checkE1": types.CLCRunnerStats{
+							AverageExecutionTime: 100,
+							MetricSamples:        300,
+						},
+					},
+				},
+			},
+		},
 	} {
 		t.Run(fmt.Sprintf("case %d", i), func(t *testing.T) {
 			dispatcher := newDispatcher()
