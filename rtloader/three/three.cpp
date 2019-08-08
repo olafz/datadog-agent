@@ -519,7 +519,7 @@ PyObject *Three::_findSubclassOf(PyObject *base, PyObject *module)
             goto done;
         }
 
-        // get symbol name (not a copy, should not be modified or freed)
+        // get symbol name, as_string returns a new object that we have to free
         char *symbol_name = as_string(symbol);
         if (symbol_name == NULL) {
             // as_string returns NULL if `symbol` is not a string object
@@ -531,7 +531,7 @@ PyObject *Three::_findSubclassOf(PyObject *base, PyObject *module)
         // get symbol instance. It's a new ref but in case of success we don't
         // DecRef since we return it and the caller will be owner
         klass = PyObject_GetAttrString(module, symbol_name);
-        ::three(symbol_name);
+        ::free(symbol_name);
         if (klass == NULL) {
             PyErr_Clear();
             continue;
